@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Moon, Sun, Store } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useCart } from '@/contexts/CartContext';
-import { useTheme } from '@/contexts/ThemeContext';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ShoppingCart, Moon, Sun, Store } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useCart } from "@/contexts/CartContext";
+import { useTheme } from "@/contexts/ThemeContext";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -26,7 +26,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <Store className="h-6 w-6 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold gradient-primary bg-clip-text text-transparent">
-                ModernShop
+                ESHOP
               </span>
             </Link>
 
@@ -35,7 +35,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <Link
                 to="/"
                 className={`font-medium transition-smooth hover:text-primary ${
-                  location.pathname === '/' ? 'text-primary' : 'text-muted-foreground'
+                  location.pathname === "/"
+                    ? "text-primary"
+                    : "text-muted-foreground"
                 }`}
               >
                 Home
@@ -43,7 +45,10 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <Link
                 to="/categories"
                 className={`font-medium transition-smooth hover:text-primary ${
-                  location.pathname === '/categories' || location.pathname.startsWith('/category/') ? 'text-primary' : 'text-muted-foreground'
+                  location.pathname === "/categories" ||
+                  location.pathname.startsWith("/category/")
+                    ? "text-primary"
+                    : "text-muted-foreground"
                 }`}
               >
                 Categories
@@ -51,7 +56,9 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <Link
                 to="/about"
                 className={`font-medium transition-smooth hover:text-primary ${
-                  location.pathname === '/about' ? 'text-primary' : 'text-muted-foreground'
+                  location.pathname === "/about"
+                    ? "text-primary"
+                    : "text-muted-foreground"
                 }`}
               >
                 About
@@ -67,7 +74,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 onClick={toggleTheme}
                 className="transition-spring hover:shadow-card"
               >
-                {theme === 'light' ? (
+                {theme === "light" ? (
                   <Moon className="h-5 w-5" />
                 ) : (
                   <Sun className="h-5 w-5" />
@@ -96,9 +103,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       </nav>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        {children}
-      </main>
+      <main className="container mx-auto px-4 py-8">{children}</main>
 
       {/* Footer */}
       <footer className="bg-secondary/50 border-t mt-16">
