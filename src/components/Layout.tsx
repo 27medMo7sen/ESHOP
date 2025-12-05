@@ -1,9 +1,10 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, Moon, Sun, Store } from "lucide-react";
+import { ShoppingCart, Moon, Sun, Store, User, LogOut, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 import { useTheme } from "@/contexts/ThemeContext";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { itemCount } = useCart();
   const { theme, toggleTheme } = useTheme();
+  const { user, isAuthenticated, logout } = useAuth();
   const location = useLocation();
 
   return (
@@ -34,35 +36,43 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
             <div className="hidden md:flex items-center space-x-6">
               <Link
                 to="/"
-                className={`font-medium transition-smooth hover:text-primary ${
-                  location.pathname === "/"
+                className={`font-medium transition-smooth hover:text-primary ${location.pathname === "/"
                     ? "text-primary"
                     : "text-muted-foreground"
-                }`}
+                  }`}
               >
                 Home
               </Link>
               <Link
                 to="/categories"
-                className={`font-medium transition-smooth hover:text-primary ${
-                  location.pathname === "/categories" ||
-                  location.pathname.startsWith("/category/")
+                className={`font-medium transition-smooth hover:text-primary ${location.pathname === "/categories" ||
+                    location.pathname.startsWith("/category/")
                     ? "text-primary"
                     : "text-muted-foreground"
-                }`}
+                  }`}
               >
                 Categories
               </Link>
               <Link
                 to="/about"
-                className={`font-medium transition-smooth hover:text-primary ${
-                  location.pathname === "/about"
+                className={`font-medium transition-smooth hover:text-primary ${location.pathname === "/about"
                     ? "text-primary"
                     : "text-muted-foreground"
-                }`}
+                  }`}
               >
                 About
               </Link>
+              {isAuthenticated && (
+                <Link
+                  to="/orders"
+                  className={`font-medium transition-smooth hover:text-primary ${location.pathname === "/orders"
+                      ? "text-primary"
+                      : "text-muted-foreground"
+                    }`}
+                >
+                  Orders
+                </Link>
+              )}
             </div>
 
             {/* Actions */}
@@ -97,6 +107,47 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                   )}
                 </Link>
               </Button>
+
+              {/* Auth Section */}
+              {isAuthenticated ? (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    asChild
+                    className="transition-spring hover:shadow-card hidden md:flex"
+                  >
+                    <Link to="/orders">
+                      <Package className="h-5 w-5" />
+                    </Link>
+                  </Button>
+                  <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted">
+                    <User className="h-4 w-4" />
+                    <span className="text-sm font-medium">{user?.name}</span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={logout}
+                    className="transition-spring hover:shadow-card"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    <span className="hidden md:inline">Logout</span>
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  asChild
+                  className="transition-spring hover:shadow-card"
+                >
+                  <Link to="/login">
+                    <User className="h-4 w-4 mr-2" />
+                    Login
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
         </div>

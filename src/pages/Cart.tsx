@@ -161,16 +161,19 @@ const Cart: React.FC = () => {
                 </div>
               </div>
 
-              <Button 
-                className="w-full gradient-primary hover:shadow-glow transition-spring" 
+              <Button
+                asChild
+                className="w-full gradient-primary hover:shadow-glow transition-spring"
                 size="lg"
               >
-                Proceed to Checkout
+                <Link to="/checkout">
+                  Proceed to Checkout
+                </Link>
               </Button>
 
-              <Button 
-                variant="ghost" 
-                asChild 
+              <Button
+                variant="ghost"
+                asChild
                 className="w-full"
               >
                 <Link to="/">
